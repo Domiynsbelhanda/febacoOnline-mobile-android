@@ -37,6 +37,7 @@ dependencies:
   rive:
   flutter_svg:
   http:
+  package_info_plus:
 
 dev_dependencies:
   flutter_test:

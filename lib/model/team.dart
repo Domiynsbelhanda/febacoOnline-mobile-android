@@ -2,6 +2,7 @@ import 'athlete.dart';
 import 'user.dart';
 
 class Team {
+  final int? id;
   final String name;
   final String? description;
   final String? responsibleName;
@@ -19,6 +20,7 @@ class Team {
   final User? user;
 
   Team({
+    this.id,
     required this.name,
     this.description,
     this.responsibleName,
@@ -38,6 +40,7 @@ class Team {
 
   factory Team.fromJson(Map<String, dynamic> json) {
     return Team(
+      id: json['id'] != null ? int.tryParse(json['id'].toString()) : null,
       name: json['name'],
       description: json['description'],
       responsibleName: json['responsible_name'],
@@ -45,7 +48,10 @@ class Team {
       contactPhone: json['contact_phone'],
       address: json['address'],
       logo: json['logo'],
-      isActive: json['is_active'] == true || json['is_active'] == 1 || json['is_active'] == "1" || json['is_active'] == "true",
+      isActive: json['is_active'] == true ||
+          json['is_active'] == 1 ||
+          json['is_active'] == "1" ||
+          json['is_active'] == "true",
       province: json['province'],
       categorie: json['categorie'],
       ville: json['ville'],
