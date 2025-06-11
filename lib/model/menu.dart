@@ -7,87 +7,40 @@ class Menu {
   Menu({required this.title, required this.rive});
 }
 
-List<Menu> sidebarMenus = [
+List<Menu> bottomNavItems = [
   Menu(
-    title: "Home",
+    title: "Accueil",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "HOME",
-        stateMachineName: "HOME_interactivity"),
+        stateMachineName: "HOME_Interactivity"),
   ),
   Menu(
-    title: "Search",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "SEARCH",
-        stateMachineName: "SEARCH_Interactivity"),
-  ),
-  Menu(
-    title: "Favorites",
+    title: "Equipes",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "LIKE/STAR",
         stateMachineName: "STAR_Interactivity"),
   ),
   Menu(
-    title: "Help",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
-  ),
-];
-List<Menu> sidebarMenus2 = [
-  Menu(
-    title: "History",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "TIMER",
-        stateMachineName: "TIMER_Interactivity"),
-  ),
-  Menu(
-    title: "Notifications",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "BELL",
-        stateMachineName: "BELL_Interactivity"),
-  ),
-];
-
-List<Menu> bottomNavItems = [
-  Menu(
-    title: "Chat",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
-  ),
-  Menu(
-    title: "Search",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "SEARCH",
-        stateMachineName: "SEARCH_Interactivity"),
-  ),
-  Menu(
-    title: "Timer",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "TIMER",
-        stateMachineName: "TIMER_Interactivity"),
-  ),
-  Menu(
-    title: "Notification",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "BELL",
-        stateMachineName: "BELL_Interactivity"),
-  ),
-  Menu(
-    title: "Profile",
+    title: "Athlètes",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "USER",
         stateMachineName: "USER_Interactivity"),
+  ),
+  Menu(
+    title: "Transferts",
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "REFRESH/RELOAD",
+        stateMachineName: "RELOAD_Interactivity"),
+  ),
+  Menu(
+    title: "À propos / Contact",
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "SETTINGS",
+        stateMachineName: "SETTINGS_Interactivity"),
   ),
 ];

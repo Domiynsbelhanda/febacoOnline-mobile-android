@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/onboding/onboding_screen.dart';
+import 'screens/entryPoint/entry_point.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,10 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'The Flutter Way',
+      title: 'FEBACO ONLINE',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFEEF1F8),
         primarySwatch: Colors.blue,
+
         fontFamily: "Intel",
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(foregroundColor: Colors.white),
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
           errorBorder: defaultInputBorder,
         ),
       ),
-      home: const OnbodingScreen(),
+      home: const EntryPoint(),
     );
   }
 }
