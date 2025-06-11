@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../model/federation.dart';
+import '../../model/team.dart';
 import '../../utils/api_service.dart';
 import '../../widget/entity_card.dart';
+import '../../widget/top_team_card.dart';
 import 'components/secondary_course_card.dart';
 import '../../model/course.dart';
 
@@ -34,6 +36,13 @@ class HomePage extends StatelessWidget {
                 .expand((f) => f.entities)
                 .toList();
 
+            final teams = federations
+                .expand((f) => f.entities)
+                .expand((e) => e.teams.map((t) => {'team': t, 'entityName': e.name}))
+                .toList();
+
+            final topTeams = teams.take(5).toList();
+
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +65,7 @@ class HomePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: Text(
-                      "Recent",
+                      "Entente Urbaine",
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!
@@ -88,27 +97,29 @@ class HomePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: Text(
-                      "Recent",
+                      "Top Equipe",
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!
                           .copyWith(
                         color: Colors.black,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
                   ),
 
-                  // Static section (peut être remplacée plus tard)
-                  ...recentCourses.map((course) => Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20, right: 20, bottom: 20),
-                    child: SecondaryCourseCard(
-                      title: course.title,
-                      iconsSrc: course.iconSrc,
-                      colorl: course.color,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: topTeams.map((data) {
+
+                        final Team team = data['team'] as Team;
+                        final String entity = data['entityName'] as String;
+
+                        return TopTeamCard(team: team, entityName: entity);
+                      }).toList(),
                     ),
-                  )),
+                  ),
                 ],
               ),
             );
