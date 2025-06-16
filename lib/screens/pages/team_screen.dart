@@ -1,3 +1,4 @@
+import 'package:febacoonline/screens/pages/team_detail_screen.dart';
 import 'package:flutter/material.dart';
 import '../../model/federation.dart';
 import '../../model/team.dart';
@@ -5,7 +6,11 @@ import '../../utils/api_service.dart';
 import '../../widget/top_team_card.dart'; // Assure-toi que ce fichier contient le widget utilisé
 
 class TeamsScreen extends StatefulWidget {
-  const TeamsScreen({super.key});
+
+  final int? entityId;
+  final String? entityName;
+
+  const TeamsScreen({super.key, this.entityId, this.entityName});
 
   @override
   State<TeamsScreen> createState() => _TeamsScreenState();
@@ -29,8 +34,11 @@ class _TeamsScreenState extends State<TeamsScreen> {
         .map((f) => Federation.fromJson(f))
         .toList();
 
+    final entityId = widget.entityId;
+
     final teams = federations
         .expand((f) => f.entities)
+        .where((e) => entityId == null || e.id == entityId)
         .expand((e) => e.teams.map((t) => {
       'team': t,
       'entityName': e.name,
@@ -60,7 +68,7 @@ class _TeamsScreenState extends State<TeamsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Équipes'),
+        title: Text(widget.entityName ?? 'Toutes les équipes'),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
@@ -92,7 +100,17 @@ class _TeamsScreenState extends State<TeamsScreen> {
                 final String entity =
                 filteredTeams[index]['entityName'] as String;
 
-                return TopTeamCard(team: team, entityName: entity);
+                return GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TeamDetailScreen(team: team),
+                        ),
+                      );
+                    },
+                    child: TopTeamCard(team: team, entityName: entity)
+                );
               },
             ),
           ),

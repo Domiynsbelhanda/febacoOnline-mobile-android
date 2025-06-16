@@ -2,6 +2,7 @@ import 'transfer.dart';
 import 'performance.dart';
 
 class Athlete {
+  final int? id; // <- Ajouté
   final int? teamId;
   final String lastName;
   final String? middleName;
@@ -23,6 +24,7 @@ class Athlete {
   final List<Performance> performances;
 
   Athlete({
+    this.id, // <- Ajouté ici
     this.teamId,
     required this.lastName,
     this.middleName,
@@ -46,6 +48,7 @@ class Athlete {
 
   factory Athlete.fromJson(Map<String, dynamic> json) {
     return Athlete(
+      id: json['id'] != null ? int.tryParse(json['id'].toString()) : null, // <- Lecture de l'ID
       teamId: json['team_id'] != null
           ? int.tryParse(json['team_id'].toString())
           : null,

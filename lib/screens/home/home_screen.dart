@@ -4,6 +4,8 @@ import '../../model/team.dart';
 import '../../utils/api_service.dart';
 import '../../widget/entity_card.dart';
 import '../../widget/top_team_card.dart';
+import '../pages/team_detail_screen.dart';
+import '../pages/team_screen.dart';
 import 'components/secondary_course_card.dart';
 import '../../model/course.dart';
 
@@ -84,10 +86,22 @@ class HomePage extends StatelessWidget {
                       children: entities.map((entity) {
                         return Padding(
                           padding: const EdgeInsets.only(right: 12),
-                          child: EntityCard(
-                            name: entity.name,
-                            logoUrl: "https://febaco.ourworldtkpl.com//storage/${entity.logo}" ??
-                                'https://via.placeholder.com/150',
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TeamsScreen(
+                                    entityId: entity.id,
+                                    entityName: entity.name,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: EntityCard(
+                              name: entity.name,
+                              logoUrl: "https://febaco.ourworldtkpl.com/storage/${entity.logo}" ?? 'https://via.placeholder.com/150',
+                            ),
                           ),
                         );
                       }).toList(),
@@ -116,7 +130,17 @@ class HomePage extends StatelessWidget {
                         final Team team = data['team'] as Team;
                         final String entity = data['entityName'] as String;
 
-                        return TopTeamCard(team: team, entityName: entity);
+                        return GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TeamDetailScreen(team: team),
+                                ),
+                            );
+                          },
+                            child: TopTeamCard(team: team, entityName: entity)
+                        );
                       }).toList(),
                     ),
                   ),

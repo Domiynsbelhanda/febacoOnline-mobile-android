@@ -1,6 +1,7 @@
-import 'team.dart';
+import 'package:febacoonline/model/team.dart';
 
 class Entity {
+  final int? id;
   final String name;
   final String? description;
   final String? region;
@@ -13,6 +14,7 @@ class Entity {
   final List<Team> teams;
 
   Entity({
+    this.id,
     required this.name,
     this.description,
     this.region,
@@ -27,6 +29,7 @@ class Entity {
 
   factory Entity.fromJson(Map<String, dynamic> json) {
     return Entity(
+      id: json['id'] != null ? int.tryParse(json['id'].toString()) : null,
       name: json['name'],
       description: json['description'],
       region: json['region'],
@@ -35,7 +38,10 @@ class Entity {
       contactPhone: json['contact_phone'],
       address: json['address'],
       logo: json['logo'],
-      isActive: json['is_active'] == true || json['is_active'] == 1 || json['is_active'] == "1" || json['is_active'] == "true",
+      isActive: json['is_active'] == true ||
+          json['is_active'] == 1 ||
+          json['is_active'] == "1" ||
+          json['is_active'] == "true",
       teams: (json['teams'] as List<dynamic>)
           .map((e) => Team.fromJson(e))
           .toList(),
