@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   rive:
   flutter_svg:
+  qr_flutter:
   http:
   package_info_plus:
 
@@ -66,3 +67,4 @@ flutter:
     - assets/Backgrounds/
     - assets/icons/
     - assets/RiveAssets/
+    - assets/images/
