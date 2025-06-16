@@ -4,6 +4,7 @@ import '../../model/athlete.dart';
 import '../../model/transfer.dart';
 import '../../widget/athlete_tile.dart';
 import '../../widget/transfert_card.dart';
+import 'athlete_detail_screen.dart';
 
 class TeamDetailScreen extends StatelessWidget {
   final Team team;
@@ -151,7 +152,20 @@ class TeamDetailScreen extends StatelessWidget {
                     itemCount: team.athletes.length,
                     itemBuilder: (context, index) {
                       final Athlete athlete = team.athletes[index];
-                      return AthleteTile(athlete: athlete, teamName: team.name);
+                      return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AthleteDetailScreen(
+                                  athlete: athlete,
+                                  teamName: team.name,
+                                ),
+                              ),
+                            );
+                          },
+                          child: AthleteTile(athlete: athlete, teamName: team.name,)
+                      );
                     },
                   ),
 

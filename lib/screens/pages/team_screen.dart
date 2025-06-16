@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import '../../model/federation.dart';
 import '../../model/team.dart';
 import '../../utils/api_service.dart';
-import '../../widget/top_team_card.dart'; // Assure-toi que ce fichier contient le widget utilisé
+import '../../widget/top_team_card.dart';
 
 class TeamsScreen extends StatefulWidget {
-
   final int? entityId;
   final String? entityName;
 
@@ -20,6 +19,7 @@ class _TeamsScreenState extends State<TeamsScreen> {
   List<Map<String, dynamic>> allTeams = [];
   List<Map<String, dynamic>> filteredTeams = [];
   String search = "";
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -30,9 +30,8 @@ class _TeamsScreenState extends State<TeamsScreen> {
   Future<void> loadTeams() async {
     final data = await ApiService.fetchPublicData();
     final List federationsJson = data["data"];
-    final List<Federation> federations = federationsJson
-        .map((f) => Federation.fromJson(f))
-        .toList();
+    final List<Federation> federations =
+    federationsJson.map((f) => Federation.fromJson(f)).toList();
 
     final entityId = widget.entityId;
 
@@ -48,6 +47,7 @@ class _TeamsScreenState extends State<TeamsScreen> {
     setState(() {
       allTeams = teams;
       filteredTeams = teams;
+      _isLoading = false;
     });
   }
 
@@ -73,7 +73,9 @@ class _TeamsScreenState extends State<TeamsScreen> {
         foregroundColor: Colors.black,
         elevation: 0,
       ),
-      body: Column(
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
@@ -101,15 +103,16 @@ class _TeamsScreenState extends State<TeamsScreen> {
                 filteredTeams[index]['entityName'] as String;
 
                 return GestureDetector(
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TeamDetailScreen(team: team),
-                        ),
-                      );
-                    },
-                    child: TopTeamCard(team: team, entityName: entity)
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            TeamDetailScreen(team: team),
+                      ),
+                    );
+                  },
+                  child: TopTeamCard(team: team, entityName: entity),
                 );
               },
             ),

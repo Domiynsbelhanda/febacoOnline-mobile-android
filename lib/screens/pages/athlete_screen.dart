@@ -16,6 +16,7 @@ class _AthletesScreenState extends State<AthletesScreen> {
   List<Map<String, dynamic>> allAthletes = [];
   List<Map<String, dynamic>> filteredAthletes = [];
   TextEditingController searchController = TextEditingController();
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -26,9 +27,8 @@ class _AthletesScreenState extends State<AthletesScreen> {
   Future<void> loadAthletes() async {
     final data = await ApiService.fetchPublicData();
     final List federationsJson = data["data"];
-    final List<Federation> federations = federationsJson
-        .map((f) => Federation.fromJson(f))
-        .toList();
+    final List<Federation> federations =
+    federationsJson.map((f) => Federation.fromJson(f)).toList();
 
     final athletesList = federations
         .expand((f) => f.entities)
@@ -42,6 +42,7 @@ class _AthletesScreenState extends State<AthletesScreen> {
     setState(() {
       allAthletes = athletesList;
       filteredAthletes = athletesList;
+      _isLoading = false;
     });
   }
 
@@ -74,11 +75,14 @@ class _AthletesScreenState extends State<AthletesScreen> {
         foregroundColor: Colors.black,
         elevation: 0,
       ),
-      body: Column(
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
         children: [
           // Search bar
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding:
+            const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: TextField(
               controller: searchController,
               onChanged: filterAthletes,
@@ -120,7 +124,10 @@ class _AthletesScreenState extends State<AthletesScreen> {
                       ),
                     );
                   },
-                  child: AthleteTile(athlete: athlete, teamName: teamName,)
+                  child: AthleteTile(
+                    athlete: athlete,
+                    teamName: teamName,
+                  ),
                 );
               },
             ),
